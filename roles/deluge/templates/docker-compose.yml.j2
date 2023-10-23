@@ -17,9 +17,9 @@ services:
     networks:
       - "services"
     labels:
-      - com.centurylinklabs.watchtower.enable="true"
-      - traefik.enable="true"
-      - traefik.http.services.deluge.loadbalancer.server.port="8112"
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.services.deluge.loadbalancer.server.port=8112
 networks:
   services:
     external: true

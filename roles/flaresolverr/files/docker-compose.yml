@@ -13,9 +13,9 @@ services:
     networks:
       - "services"
     labels:
-      - com.centurylinklabs.watchtower.enable="true"
-      - traefik.enable="true"
-      - traefik.http.services.flaresolverr.loadbalancer.server.port="8191"
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.services.flaresolverr.loadbalancer.server.port=8191
 networks:
   services:
     external: true

@@ -17,9 +17,9 @@ services:
     networks:
       - "services"
     labels:
-      - com.centurylinklabs.watchtower.enable="true"
-      - traefik.enable="true"
-      - traefik.http.services.filebrowser.loadbalancer.server.port="80"
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.services.filebrowser.loadbalancer.server.port=80
 networks:
   services:
     external: true

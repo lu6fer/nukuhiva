@@ -11,9 +11,9 @@ services:
     networks:
       - "services"
     labels:
-      - com.centurylinklabs.watchtower.enable="true"
-      - traefik.enable="true"
-      - traefik.http.services.tidescraper.loadbalancer.server.port="3000"
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.services.tidescraper.loadbalancer.server.port=3000
 networks:
   services:
     external: true

@@ -10,10 +10,10 @@ services:
     volumes:
       - ./data:/data
     labels:
-      - com.centurylinklabs.watchtower.enable="true"
-      - traefik.enable="true"
-      - traefik.http.services.vault.loadbalancer.server.port="80"
-      - traefik.http.services.vault-ws.loadbalancer.server.port="3012"
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.services.vault.loadbalancer.server.port=80
+      - traefik.http.services.vault-ws.loadbalancer.server.port=3012
 networks:
   services:
     external: true

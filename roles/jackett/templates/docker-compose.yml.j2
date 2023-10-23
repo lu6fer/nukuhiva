@@ -16,9 +16,9 @@ services:
     networks:
       - "services"
     labels:
-      - com.centurylinklabs.watchtower.enable="true"
-      - traefik.enable="true"
-      - traefik.http.services.jackett.loadbalancer.server.port="9117"
+      - com.centurylinklabs.watchtower.enable=true
+      - traefik.enable=true
+      - traefik.http.services.jackett.loadbalancer.server.port=9117
 networks:
   services:
     external: true

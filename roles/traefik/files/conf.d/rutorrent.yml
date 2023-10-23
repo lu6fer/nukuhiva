@@ -2,48 +2,46 @@ http:
   routers:
     rutorrent-http:
       rule: "Host(`torrent.lu6fer.fr`)"
-      service: "rutorrent@docker"
+      service: "deluge@docker"
       entryPoints:
         - "http"
       middlewares:
-        - "rutorrent"
+        - "deluge"
     rutorrent-https:
       rule: "Host(`torrent.lu6fer.fr`)"
-      service: "rutorrent@docker"
+      service: "deluge@docker"
       entryPoints:
         - "https"
       middlewares:
-        - "rutorrent"
+        - "deluge"
       tls:
         certResolver: ssl
-    rutorrent-rpc-http:
-      rule: "Host(`torrent.lu6fer.fr`) && PathPrefix(`/RPC2`)"
-      service: "rutorrent-rpc@docker"
-      entryPoints:
-        - "http"
-      middlewares:
-        - "rutorrent-rpc"
-    rutorrent-rpc-https:
-      rule: "Host(`torrent.lu6fer.fr`) && PathPrefix(`/RPC2`)"
-      service: "rutorrent-rpc@docker"
-      entryPoints:
-        - "https"
-      middlewares:
-        - "rutorrent-rpc"
+    # rutorrent-rpc-http:
+    #   rule: "Host(`torrent.lu6fer.fr`) && PathPrefix(`/RPC2`)"
+    #   service: "rutorrent-rpc@docker"
+    #   entryPoints:
+    #     - "http"
+    #   middlewares:
+    #     - "rutorrent-rpc"
+    # rutorrent-rpc-https:
+    #   rule: "Host(`torrent.lu6fer.fr`) && PathPrefix(`/RPC2`)"
+    #   service: "rutorrent-rpc@docker"
+    #   entryPoints:
+    #     - "https"
   middlewares:
-    rutorrent:
+    deluge:
       chain:
         middlewares:
           - "addSlash"
           - "redirect"
           - "auth"
-    addRpc:
-      addPrefix:
-        prefix: "/RPC2"
-    rutorrent-rpc:
-      chain:
-        middlewares:
-          - "addRpc"
-          - "redirect"
-          - "auth"
+  #   addRpc:
+  #     addPrefix:
+  #       prefix: "/RPC2"
+  #   rutorrent-rpc:
+  #     chain:
+  #       middlewares:
+  #         - "addRpc"
+  #         - "redirect"
+  #         - "auth"
 
