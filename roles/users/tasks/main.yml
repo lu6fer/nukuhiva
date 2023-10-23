@@ -1,0 +1,18 @@
+---
+# tasks file for users
+- name: Create groups
+  ansible.builtin.group:
+    name: "{{ group }}"
+  become: true
+  tags: users
+
+- name: Create users
+  ansible.builtin.user:
+    name: "{{ item }}"
+    groups:
+      - "{{ group }}"
+    shell: /usr/sbin/nologin
+  with_items: "{{ users_list }}"
+  become: true
+  tags: users
+

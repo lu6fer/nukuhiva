@@ -1,0 +1,32 @@
+---
+# tasks file for radarr
+- name: Get moorea user info
+  ansible.builtin.getent:
+    database: passwd
+    key: moorea
+  tags: radarr
+
+- name: Create directories
+  ansible.builtin.file:
+    path: /opt/radarr/config
+    state: directory
+    recurse: true
+  become: true
+  tags: radarr
+
+- name: Copy docker-compose
+  vars:
+    moorea_uid: "{{ ansible_facts.getent_passwd.moorea.1 }}"
+    moorea_gid: "{{ ansible_facts.getent_passwd.moorea.2 }}"
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /opt/radarr/docker-compose.yml
+    mode: "644"
+  become: true
+  tags: radarr
+
+- name: Start radarr
+  community.docker.docker_compose:
+    project_src: /opt/radarr/
+  become: true
+  tags: radarr

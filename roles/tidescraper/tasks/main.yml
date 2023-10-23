@@ -1,0 +1,39 @@
+---
+# tasks file for tidescraper
+- name: Create directory
+  ansible.builtin.file:
+    path: /opt/tideScraper
+    state: directory
+    mode: "755"
+  become: true
+  tags: tidescraper
+
+- name: Clone repo
+  ansible.builtin.git:
+    repo: https://github.com/lu6fer/tideScraper.git #git@github.com:lu6fer/tideScraper.git
+    dest: /opt/tideScraper
+  become: true
+  tags: tidescraper
+
+- name: Copy docker-compose
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: /opt/tideScraper/docker-compose.yml
+    mode: "644"
+  become: true
+  tags: tidescraper
+
+- name: Build docker
+  community.docker.docker_image:
+    name: lu6fer/tidescraper
+    build:
+      path: /opt/tideScraper
+    source: build
+  become: true
+  tags: tidescraper
+
+- name: Start tidescraper
+  community.docker.docker_compose:
+    project_src: /opt/tideScraper
+  become: true
+  tags: tidescraper

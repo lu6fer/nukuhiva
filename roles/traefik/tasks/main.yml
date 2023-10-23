@@ -1,0 +1,42 @@
+---
+# tasks file for traefik
+- name: Create directories
+  ansible.builtin.file:
+    path: "/opt/traefik/{{ item }}"
+    state: directory
+    mode: "755"
+  with_items:
+    - logs
+    - conf.d
+  become: true
+  tags: traefik
+
+- name: Copy config
+  ansible.builtin.copy:
+    src: ./conf.d/
+    dest: /opt/traefik/conf.d
+    mode: "755"
+  become: true
+  tags: traefik
+
+- name: Copy docker-compose
+  ansible.builtin.copy:
+    src: traefik.yml
+    dest: /opt/traefik
+    mode: "644"
+  become: true
+  tags: traefik
+
+- name: Copy docker-compose
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: /opt/traefik
+    mode: "644"
+  become: true
+  tags: traefik
+
+- name: Create and start traefik
+  community.docker.docker_compose:
+    project_src: /opt/traefik
+  become: true
+  tags: traefik

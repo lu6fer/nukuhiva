@@ -1,0 +1,17 @@
+http:
+  routers:
+    radarr-http:
+      rule: "Host(`radarr.lu6fer.fr`)"
+      service: "radarr@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    radarr-https:
+      rule: "Host(`radarr.lu6fer.fr`)"
+      service: "radarr@docker"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl
+

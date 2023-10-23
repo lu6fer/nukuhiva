@@ -1,0 +1,38 @@
+http:
+  routers:
+    nextcloud-http:
+      rule: "Host(`cloud.lu6fer.fr`)"
+      service: "nextcloud@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "nextcloud"
+    nextcloud-https:
+      rule: "Host(`cloud.lu6fer.fr`)"
+      service: "nextcloud@docker"
+      entryPoints:
+        - "https"
+      middlewares:
+        - "nextcloud"
+      tls:
+        certResolver: ssl
+  middlewares:
+    nextcloud:
+      chain:
+        middlewares:
+          - "redirect"
+          - "nextcloud-security"
+          - "nextcloud-dav"
+    nextcloud-security:
+      headers:
+        framedeny: true
+        sslredirect: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 15552000
+        customFrameOptionsValue: "SAMEORIGIN"
+    nextcloud-dav:
+      redirectRegex:
+        permanent: true
+        regex: "https://(.*)/.well-known/(card|cal)dev"
+        replacement: "https://${1}/remote.php/dav/"

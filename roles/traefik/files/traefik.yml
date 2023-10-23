@@ -1,0 +1,35 @@
+global:
+#  checkNewVersion: true
+  sendAnonymousUsage: false
+ #  insecureSNI: true
+log:
+  filePath: /etc/traefik/logs/traefik.log
+  level: INFO
+    #level: DEBUG
+accessLog:
+  filePath: /etc/traefik/logs/access.log
+entryPoints:
+  http:
+    address: :80
+  https:
+    address: :443
+  vault-ws:
+      address: :3012
+api:
+  insecure: true
+  dashboard: true
+  debug: true
+providers:
+  docker:
+    exposedByDefault: false
+    network: services
+  file:
+    directory: /etc/traefik/conf.d
+    watch: true
+certificatesResolvers:
+  ssl:
+    acme:
+      email: "lu6fer2604@gmail.com"
+      storage: /etc/traefik/acme.json
+      tlsChallenge: {}
+      

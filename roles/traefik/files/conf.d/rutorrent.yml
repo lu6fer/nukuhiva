@@ -1,0 +1,49 @@
+http:
+  routers:
+    rutorrent-http:
+      rule: "Host(`torrent.lu6fer.fr`)"
+      service: "rutorrent@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "rutorrent"
+    rutorrent-https:
+      rule: "Host(`torrent.lu6fer.fr`)"
+      service: "rutorrent@docker"
+      entryPoints:
+        - "https"
+      middlewares:
+        - "rutorrent"
+      tls:
+        certResolver: ssl
+    rutorrent-rpc-http:
+      rule: "Host(`torrent.lu6fer.fr`) && PathPrefix(`/RPC2`)"
+      service: "rutorrent-rpc@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "rutorrent-rpc"
+    rutorrent-rpc-https:
+      rule: "Host(`torrent.lu6fer.fr`) && PathPrefix(`/RPC2`)"
+      service: "rutorrent-rpc@docker"
+      entryPoints:
+        - "https"
+      middlewares:
+        - "rutorrent-rpc"
+  middlewares:
+    rutorrent:
+      chain:
+        middlewares:
+          - "addSlash"
+          - "redirect"
+          - "auth"
+    addRpc:
+      addPrefix:
+        prefix: "/RPC2"
+    rutorrent-rpc:
+      chain:
+        middlewares:
+          - "addRpc"
+          - "redirect"
+          - "auth"
+

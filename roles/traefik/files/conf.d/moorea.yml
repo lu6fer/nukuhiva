@@ -1,0 +1,24 @@
+http:
+  routers:
+    moorea-http:
+      rule: "Host(`moorea.lu6fer.fr`)"
+      service: "moorea"
+      priority: 1
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    moorea-https:
+      rule: "Host(`moorea.lu6fer.fr`)"
+      service: "moorea"
+      priority: 1
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl
+  middlewares:
+  services:
+    moorea:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.0.253/"

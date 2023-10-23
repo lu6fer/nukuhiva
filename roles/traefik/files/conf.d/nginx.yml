@@ -1,0 +1,16 @@
+http:
+  routers:
+    nginx-http:
+      rule: "Host(`sgm.lu6fer.fr`)"
+      service: "nginx@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    nginx-https:
+      rule: "Host(`sgm.lu6fer.fr`)"
+      service: "nginx@docker"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl

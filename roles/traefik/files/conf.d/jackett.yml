@@ -1,0 +1,17 @@
+http:
+  routers:
+    jackett-http:
+      rule: "Host(`jackett.lu6fer.fr`)"
+      service: "jackett@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    jackett-https:
+      rule: "Host(`jackett.lu6fer.fr`)"
+      service: "jackett@docker"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl
+

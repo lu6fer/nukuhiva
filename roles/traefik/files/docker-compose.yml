@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  vaultwarden:
+    container_name: traefik
+    image: traefik:latest
+    restart: unless-stopped
+    networks:
+      - "services"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/traefik:/etc/traefik
+    labels:
+      - com.centurylinklabs.watchtower.enable="true"
+    ports:
+      - 80:80
+      - 443:433
+networks:
+  services:
+    external: true
+    name: services

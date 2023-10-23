@@ -1,0 +1,21 @@
+http:
+  routers:
+    vault-http:
+      rule: "Host(`vault.lu6fer.fr`)"
+      service: "vault@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    vault-https:
+      rule: "Host(`vault.lu6fer.fr`)"
+      service: "vault@docker"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl
+    vault-ws:
+      rule: "Host(`vault.lu6fer.fr`) && Path(`/notifications/hub`)"
+      service: "vault-ws@docker"
+      entryPoints:
+        - "vault-ws"

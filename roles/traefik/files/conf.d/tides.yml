@@ -1,0 +1,19 @@
+http:
+  routers:
+    tides-http:
+      rule: "Host(`tides.lu6fer.fr`)"
+      service: "tides@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    tides-https:
+      rule: "Host(`tides.lu6fer.fr`)"
+      service: "tides@docker"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl
+      middlewares: 
+        - "auth"
+

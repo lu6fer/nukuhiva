@@ -1,0 +1,7 @@
+---
+# vars file for users
+group: media
+
+users_list:
+  - kodi
+  - moorea

@@ -1,0 +1,34 @@
+---
+# tasks file for deluge
+- name: Get moorea user info
+  ansible.builtin.getent:
+    database: passwd
+    key: moorea
+  tags: deluge
+
+- name: Create directories
+  ansible.builtin.file:
+    path: /opt/deluge/config
+    recurse: true
+    state: directory
+    mode: "755"
+  become: true
+  tags: deluge
+
+- name: Copy docker-compose
+  vars:
+    moorea_uid: "{{ ansible_facts.getent_passwd.moorea.1 }}"
+    moorea_gid: "{{ ansible_facts.getent_passwd.moorea.2 }}"
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /opt/deluge/docker-compose.yml
+    mode: "644"
+  become: true
+  tags: deluge
+
+- name: Start deluge
+  community.docker.docker_compose:
+    project_src: /opt/deluge/
+  become: true
+  tags: deluge
+  

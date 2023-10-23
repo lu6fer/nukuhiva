@@ -1,0 +1,9 @@
+---
+# vars file for nukuhiva
+download_path: /srv/download
+
+mounts:
+  - Films
+  - Series
+  - Musques
+  - Livres

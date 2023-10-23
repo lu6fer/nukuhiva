@@ -1,0 +1,23 @@
+---
+# tasks file for vaultwarden
+- name: Create directories
+  ansible.builtin.file:
+    path: /opt/vaultwarden
+    state: directory
+    mode: "755"
+  become: true
+  tags: vaultwarden
+
+- name: Copy docker-compose
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: /opt/vaultwarden
+    mode: "644"
+  become: true
+  tags: vaultwarden
+
+- name: Create and start vaultwarden
+  community.docker.docker_compose:
+    project_src: /opt/vaultwarden
+  become: true
+  tags: vaultwarden

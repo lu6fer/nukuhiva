@@ -1,0 +1,24 @@
+---
+# tasks file for flaresolverr
+
+- name: Create directories
+  ansible.builtin.file:
+    path: /opt/flaresolverr
+    state: directory
+    recurse: true
+  become: true
+  tags: flaresolverr
+
+- name: Copy docker-compose
+  ansible.builtin.copy:
+    src: docker-compose.yml
+    dest: /opt/flaresolverr/docker-compose.yml
+    mode: "644"
+  become: true
+  tags: flaresolverr
+
+- name: Start flaresolverr
+  community.docker.docker_compose:
+    project_src: /opt/flaresolverr/
+  become: true
+  tags: flaresolverr

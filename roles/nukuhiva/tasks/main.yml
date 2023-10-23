@@ -1,0 +1,80 @@
+---
+# tasks file for nukuhiva
+- name: Install cifs-utils
+  ansible.builtin.apt:
+    name:
+      - cifs-utils
+      - samba
+    state: present
+    update_cache: true
+  become: true
+  tags: nukuhiva
+
+- name: Add moorea to hosts
+  ansible.builtin.lineinfile:
+    dest: /etc/hosts
+    regexp: ".*moorea$"
+    line: "10.60.1.1 moorea"
+    state: present
+  become: true
+  tags: nukuhiva
+
+- name: Get moorea user info
+  ansible.builtin.getent:
+    database: passwd
+    key: moorea
+  tags: nukuhiva
+
+- name: Copy credentials
+  ansible.builtin.copy:
+    src: credentials.moorea
+    dest: /etc/samba/.credentials.moorea
+    mode: "600"
+  become: true
+  tags: nukuhiva
+
+- name: Create directories
+  ansible.builtin.file:
+    path: "/srv/moorea/{{ item }}"
+    state: directory
+    recurse: true
+    owner: moorea
+    group: media
+    mode: "755"
+  with_items: "{{ mounts }}"
+  become: true
+  tags: nukuhiva
+
+- name: Create download directories
+  ansible.builtin.file:
+    path: "{{ download_path }}"
+    state: directory
+    recurse: true
+    owner: moorea
+    group: media
+    mode: "775"
+  become: true
+  tags: nukuhiva
+
+- name: Copy moorea share config
+  vars:
+    moorea_uid: "{{ ansible_facts.getent_passwd.moorea.1 }}"
+    moorea_gid: "{{ ansible_facts.getent_passwd.moorea.2 }}"
+  ansible.builtin.template:
+    src: srv-moorea.mount.j2
+    dest: "/etc/systemd/system/srv-moorea-{{ item }}.mount"
+    mode: "644"
+  with_items: "{{ mounts }}"
+  become: true
+  tags: nukuhiva
+
+- name: Start mounts
+  ansible.builtin.systemd:
+    name: "srv-moorea-{{ item }}.mount"
+    state: started
+    daemon_reload: true
+    enabled: true
+  ignore_errors: true
+  with_items: "{{ mounts }}"
+  become: true
+  tags: nukuhiva

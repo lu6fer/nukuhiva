@@ -1,0 +1,21 @@
+http:
+  routers:
+    jellyfin-http:
+      rule: "Host(`jellyfin.lu6fer.fr`)"
+      service: "jellyfin"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    jellyfin-https:
+      rule: "Host(`jellyfin.lu6fer.fr`)"
+      service: "jellyfin"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl
+  services:
+    jellyfin:
+      loadBalancer:
+        servers:
+            - url: "http://10.60.1.1:8096"

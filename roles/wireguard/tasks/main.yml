@@ -1,0 +1,47 @@
+---
+# tasks file for wireguard
+- name: Install wireguard
+  ansible.builtin.apt:
+    name:
+      - wireguard
+      - iptables
+    state: present
+    update_cache: true
+  become: true
+  tags: wireguard
+
+- name: Copy masquerade
+  ansible.builtin.copy:
+    src: masquerade.sh
+    dest: /etc/wireguard/masquerade.sh
+    mode: "700"
+  become: true
+  tags: wireguard
+
+- name: Copy config
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/wireguard/{{ item }}"
+    mode: "600"
+  with_items:
+    - wg-private.key
+    - wg-public.key
+    - keys
+  become: true
+  tags: wireguard
+
+- name: Copy wg0 config
+  ansible.builtin.template:
+    src: "wg0.conf.j2"
+    dest: "/etc/wireguard/wg0.conf"
+    mode: "600"
+  become: true
+  tags: wireguard
+
+- name: Start and enable wireguard
+  ansible.builtin.systemd:
+    name: wg-quick@wg0.service
+    enabled: true
+    state: started
+  become: true
+  tags: wireguard

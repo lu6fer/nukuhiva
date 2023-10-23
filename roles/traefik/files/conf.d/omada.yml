@@ -1,0 +1,40 @@
+http:
+  routers:
+    omada-http:
+      rule: "Host(`omada.lu6fer.fr`)"
+      service: "omada"
+      priority: 1
+      entryPoints:
+        - "http"
+      middlewares:
+        - "mid-omada-redirectRegex"
+        - "mid-omada-headers"
+    omada-https:
+      rule: "Host(`omada.lu6fer.fr`)"
+      service: "omada"
+      priority: 1
+      middlewares:
+        - "mid-omada-redirectRegex"
+        - "mid-omada-headers"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl
+  middlewares:
+    mid-omada-redirectRegex:
+      redirectRegex:
+        regex: "^https:\\/\\/([^\\/]+)\\/?$"
+        replacement: "https://$1/29ce461405a1ee8a46b641d7b9ed5344/login"
+    mid-omada-headers:
+      headers:
+        customRequestHeaders:
+          host: "10.60.1.1:8088"
+        customResponseHeaders:
+          host: "omada.lu6fer.fr"
+  services:
+    omada:
+      loadBalancer:
+        servers:
+            - url: "http://10.60.1.1:8088/"
+        passHostHeader: true
+

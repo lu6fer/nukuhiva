@@ -1,0 +1,22 @@
+http:
+  middlewares:
+    auth:
+      basicAuth:
+        users:
+          - "admin:$2y$05$cOfRQPNC8zoroutorNIV9eFacfO0.hiJcrtW2PdZuOL8t7jDqWHKW"
+          - "prometheus:$2y$10$c7Y0ykVTtennH2GpW.vxFuPvQoUqmdXwCEZGR/QuzzOJNztAydOo6"
+          - "tide:$2y$10$I6LEfmRSfYxarXFoILC3zOoD/aUzWsclND6jMUUrpwd4z9Mt7PKEC"
+    redirect:
+      redirectScheme:
+        scheme: https    
+        permanent: true
+    addSlash:
+      redirectRegex:
+        regex: "^(https?://[^/]+/[a-z0-9_]+)$"
+        replacement: "${1}/"
+    strip:
+      stripPrefix:
+        prefixes:
+          - "/portainer"
+          - "/prometheus"
+        forceSlash: true

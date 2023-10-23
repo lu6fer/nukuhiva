@@ -1,0 +1,16 @@
+http:
+  routers:
+    wordpress-http:
+      rule: "Host(`wordpress.lu6fer.fr`)"
+      service: "wordpress@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    wordpress-https:
+      rule: "Host(`wordpress.lu6fer.fr`)"
+      service: "wordpress@docker"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl

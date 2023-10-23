@@ -1,0 +1,21 @@
+---
+# Nukuhiva main playbook
+- name: Nukuhiva
+  hosts: nukuhiva
+  roles:
+    - users
+    - wireguard
+    - nukuhiva
+    - vaultwarden
+    - tidescraper
+    - sonarr
+    - radarr
+    - jackett
+    - flaresolverr
+    - filebrowser
+    - deluge
+    - bazarr
+    - watchtower
+    - traefik
+  tags: nukuhiav
+   

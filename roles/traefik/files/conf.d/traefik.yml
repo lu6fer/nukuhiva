@@ -1,0 +1,29 @@
+http:
+  routers:
+    # ##########################################################################
+    # Traefik
+    # ##########################################################################
+    traefik-http:
+      rule: "Host(`nukuhiva.lu6fer.fr`)"
+      service: "api@internal"
+      priority: 1
+      entryPoints:
+        - "http"
+      middlewares:
+        - "traefik"
+    traefik-https:
+      rule: "Host(`nukuhiva.lu6fer.fr`)"
+      service: "api@internal"
+      priority: 1
+      entryPoints:
+        - "https"
+      middlewares:
+        - "traefik"
+      tls:
+        certResolver: ssl
+  middlewares:
+    traefik:
+      chain:
+        middlewares:
+          - "redirect"
+          - "auth"

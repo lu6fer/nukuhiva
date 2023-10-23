@@ -1,0 +1,40 @@
+---
+# tasks file for filebrowser
+- name: Get moorea user info
+  ansible.builtin.getent:
+    database: passwd
+    key: moorea
+  tags: filebrowser
+
+- name: Create directories
+  ansible.builtin.file:
+    path: /opt/filebrowser/config
+    state: directory
+    recurse: true
+  become: true
+  tags: filebrowser
+
+- name: Copy configuration
+  ansible.builtin.copy:
+    src: filebrowser.json
+    dest: /opt/filebrowser/config/filebrowser.json
+    mode: "655"
+  become: true
+  tags: filebrowser
+
+- name: Copy docker-compose
+  vars:
+    moorea_uid: "{{ ansible_facts.getent_passwd.moorea.1 }}"
+    moorea_gid: "{{ ansible_facts.getent_passwd.moorea.2 }}"
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /opt/filebrowser/docker-compose.yml
+    mode: "644"
+  become: true
+  tags: filebrowser
+
+- name: Start filebrowser
+  community.docker.docker_compose:
+    project_src: /opt/filebrowser/
+  become: true
+  tags: filebrowser

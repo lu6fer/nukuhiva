@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  flaresolverr:
+    container_name: flaresolverr
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    restart: unless-stopped
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=Europe/Paris
+    networks:
+      - "services"
+    labels:
+      - com.centurylinklabs.watchtower.enable="true"
+      - traefik.enable="true"
+      - traefik.http.services.flaresolverr.loadbalancer.server.port="8191"
+networks:
+  services:
+    external: true
+    name: services

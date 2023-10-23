@@ -1,0 +1,13 @@
+[Unit]
+    Description=Moorea {{ item }} share
+    Requires=wg-quick@wg0.service
+    After=wg-quick@wg0.service
+
+[Mount]
+    What=//moorea/{{ item }}
+    Where=/srv/moorea/{{ item }}
+    Type=cifs
+    Options=credentials=/etc/samba/.credentials.moorea,iocharset=utf8,uid={{ moorea_uid }},gid={{ moorea_gid }},user,rw,file_mode=0777,dir_mode=0777,vers=3
+
+[Install]
+    WantedBy=multi-user.target

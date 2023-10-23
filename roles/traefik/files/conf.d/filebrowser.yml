@@ -1,0 +1,17 @@
+http:
+  routers:
+    filebrowser-http:
+      rule: "Host(`file.lu6fer.fr`)"
+      service: "filebrowser@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    filebrowser-https:
+      rule: "Host(`file.lu6fer.fr`)"
+      service: "filebrowser@docker"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl
+

@@ -1,0 +1,26 @@
+services:
+  deluge:
+    image: lscr.io/linuxserver/deluge:latest
+    container_name: deluge
+    environment:
+      - PUID={{ moorea_uid }}
+      - PGID={{ moorea_gid }}
+      - TZ=Europe/Paris
+      - DELUGE_LOGLEVEL=warn
+    volumes:
+      - /opt/deluge/config:/config
+      - /srv/downloads:/downloads
+    ports:
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
+    networks:
+      - "services"
+    labels:
+      - com.centurylinklabs.watchtower.enable="true"
+      - traefik.enable="true"
+      - traefik.http.services.deluge.loadbalancer.server.port="8112"
+networks:
+  services:
+    external: true
+    name: services

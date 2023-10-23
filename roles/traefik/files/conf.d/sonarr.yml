@@ -1,0 +1,16 @@
+http:
+  routers:
+    sonarr-http:
+      rule: "Host(`sonarr.lu6fer.fr`)"
+      service: "sonarr@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    sonarr-https:
+      rule: "Host(`sonarr.lu6fer.fr`)"
+      service: "sonarr@docker"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl

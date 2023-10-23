@@ -1,0 +1,41 @@
+[Interface]
+Address = 10.60.1.254/32
+ListenPort = 51820
+PrivateKey = {{ wireguard_private_key }}
+PostUp = /etc/wireguard/masquerade.sh start
+PostDown = /etc/wireguard/masquerade.sh stop
+
+[Peer]
+# Moorea
+PublicKey = s5LvIxeD3GEuZxj6AFbL3gE8wvtAwwN3bAbFnPfQUAg=
+AllowedIPs = 10.60.1.1/32, 192.168.0.0/24
+
+[Peer]
+# Jean-Marc Beuchee
+PublicKey = RA1/q2ljXTpx/08k/OgUx9ykgTIXw2agxPuBd6ZZmXc=
+AllowedIPS = 10.60.1.2/32
+
+[Peer]
+# raspberry pi ecole
+PublicKey = T/W7wo9Nn3jwX5hBNiF2SoL//BABwG+TVlAoagOOyTA=
+AllowedIPS = 10.60.1.3/32
+
+[Peer]
+# archlinux orange(voldemort)
+PublicKey = rN2fiQ2rCItyLiPVcKIqXG8XyiwaGgPV3YdCADJxHn0=  
+AllowedIPS = 10.60.1.4/32
+
+[Peer]
+# Florent mobile
+PublicKey = 4HRZpyoTUCMn/q46YVLuIo0pfpoNApi5pMGz556OoyU=
+AllowedIPS = 10.60.1.5/32
+
+[Peer]
+# maupiti
+PublicKey = fLTHKAvgY7HeiWF0RIZAKPBnZ0HdrnSRVl2ENgAiKQs=
+AllowedIPS = 10.60.1.6/32
+
+[Peer]
+# Pluzunet
+PublicKey = +GL2Ndwj5t6Tz7Wkz/wGiiWdstGuWo9uB9Q7rJ/ZkX8=
+AllowedIPS = 10.60.1.7/32

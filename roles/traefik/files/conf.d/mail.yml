@@ -1,0 +1,16 @@
+http:
+  routers:
+    mail-http:
+      rule: "Host(`mail.lu6fer.fr`) || Host(`autoconfigure.lu6fer.fr`)"
+      service: "mail@docker"
+      entryPoints:
+        - "http"
+tcp:
+  routers:
+    mail-https:
+      rule: "HostSNI(`mail.lu6fer.fr`) ||HostSNI(`autodiscover.lu6fer.fr`)"
+      service: "mails@docker"
+      entryPoints:
+        - "https"
+      tls:
+        passthrough: true

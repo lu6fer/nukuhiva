@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  tidescraper:
+    container_name: tidescraper
+    image: lu6fer/tidescraper
+    restart: unless-stopped
+    environment:
+      - TZ=Europe/Paris
+      - UMASK_SET=002
+    networks:
+      - "services"
+    labels:
+      - com.centurylinklabs.watchtower.enable="true"
+      - traefik.enable="true"
+      - traefik.http.services.tidescraper.loadbalancer.server.port="3000"
+networks:
+  services:
+    external: true
+    name: services

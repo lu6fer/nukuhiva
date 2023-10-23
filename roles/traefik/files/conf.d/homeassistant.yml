@@ -1,0 +1,24 @@
+http:
+  routers:
+    homeassistant-http:
+      rule: "Host(`home.lu6fer.fr`)"
+      service: "homeassistant"
+      priority: 1
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    homeassistant-https:
+      rule: "Host(`home.lu6fer.fr`)"
+      service: "homeassistant"
+      priority: 1
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl
+  middlewares:
+  services:
+    homeassistant:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.0.40:8123/"

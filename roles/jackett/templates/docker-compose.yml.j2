@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  jackett:
+    container_name: jackett
+    image: linuxserver/jackett
+    restart: unless-stopped
+    environment:
+      - PUID="{{ moorea_uid }}"
+      - PGID="{{ moorea_gid }}"
+      - TZ=Europe/Paris
+      - UMASK_SET=002
+    volumes:
+      - /opt/jackett/config:/config
+      - /srv/downloads/.watch:/downloads
+    networks:
+      - "services"
+    labels:
+      - com.centurylinklabs.watchtower.enable="true"
+      - traefik.enable="true"
+      - traefik.http.services.jackett.loadbalancer.server.port="9117"
+networks:
+  services:
+    external: true
+    name: services

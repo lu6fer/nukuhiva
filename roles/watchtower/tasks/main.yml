@@ -1,0 +1,23 @@
+---
+# tasks file for watchtower
+- name: Create watchtower directory
+  ansible.builtin.file:
+    path: "/opt/watchtower"
+    recurse: true
+    state: directory
+  become: true
+  tags: watchtower
+
+- name: Install watchtower
+  ansible.builtin.copy:
+    src: "docker-compose.yml"
+    dest: "/opt/watchtower/docker-compose.yml"
+    mode: "644"
+  become: true
+  tags: docker
+
+- name: Start watchtower
+  community.docker.docker_compose:
+    project_src: "/opt/watchtower"
+  become: true
+  tags: docker
