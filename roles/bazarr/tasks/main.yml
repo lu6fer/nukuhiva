@@ -1,2 +1,36 @@
 ---
 # tasks file for bazarr
+- name: Get moorea user info
+  ansible.builtin.getent:
+    database: passwd
+    key: moorea
+  tags: bazarr
+
+- name: Create directories
+  ansible.builtin.file:
+    path: /opt/bazarr/config
+    state: directory
+    recurse: true
+    owner: moorea
+    group: moorea
+  become: true
+  tags: bazarr
+
+- name: Copy docker-compose
+  vars:
+    moorea_uid: "{{ ansible_facts.getent_passwd.moorea.1 }}"
+    moorea_gid: "{{ ansible_facts.getent_passwd.moorea.2 }}"
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: /opt/bazarr/docker-compose.yml
+    mode: "644"
+    owner: moorea
+    group: moorea
+  become: true
+  tags: bazarr
+
+- name: Start bazarr
+  community.docker.docker_compose:
+    project_src: /opt/bazarr/
+  become: true
+  tags: bazarr

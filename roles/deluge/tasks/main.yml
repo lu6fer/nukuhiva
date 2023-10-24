@@ -12,6 +12,8 @@
     recurse: true
     state: directory
     mode: "755"
+    owner: moorea
+    group: moorea
   become: true
   tags: deluge
 
@@ -23,6 +25,8 @@
     src: docker-compose.yml.j2
     dest: /opt/deluge/docker-compose.yml
     mode: "644"
+    owner: moorea
+    group: moorea
   become: true
   tags: deluge
 
@@ -31,4 +35,3 @@
     project_src: /opt/deluge/
   become: true
   tags: deluge
-  

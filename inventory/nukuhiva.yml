@@ -1,5 +1,5 @@
 ungrouped:
   hosts:
     nukuhiva:
-      ansible_host: 192.168.0.56
-      ansible_ssh_user: florent
+      ansible_host: 192.99.161.45
+      ansible_ssh_user: debian

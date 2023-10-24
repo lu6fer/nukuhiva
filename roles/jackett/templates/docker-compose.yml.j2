@@ -6,8 +6,8 @@ services:
     image: linuxserver/jackett
     restart: unless-stopped
     environment:
-      - PUID="{{ moorea_uid }}"
-      - PGID="{{ moorea_gid }}"
+      - PUID={{ moorea_uid }}
+      - PGID={{ moorea_gid }}
       - TZ=Europe/Paris
       - UMASK_SET=002
     volumes:

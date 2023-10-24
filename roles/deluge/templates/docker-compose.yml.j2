@@ -11,6 +11,7 @@ services:
       - /opt/deluge/config:/config
       - /srv/downloads:/downloads
     ports:
+      - 51413:51413
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped

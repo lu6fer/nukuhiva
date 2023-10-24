@@ -1,9 +1,9 @@
 version: "3"
 
 services:
-  sonarr:
-    container_name: sonarr
-    image: linuxserver/sonarr
+  bazarr:
+    container_name: bazarr
+    image: linuxserver/bazarr
     restart: unless-stopped
     environment:
       - PUID={{ moorea_uid }}
@@ -11,15 +11,15 @@ services:
       - TZ=Europe/Paris
       - UMASK_SET=002
     volumes:
-      - /opt/sonarr/config:/config
+      - /opt/bazarr/config:/config
+      - /srv/moorea/Films:/movies
       - /srv/moorea/Series:/tv
-      - /srv/downloads:/downloads
     networks:
       - "services"
     labels:
       - com.centurylinklabs.watchtower.enable=true
       - traefik.enable=true
-      - traefik.http.services.sonarr.loadbalancer.server.port=8989
+      - traefik.http.services.bazarr.loadbalancer.server.port=6767
 networks:
   services:
     external: true

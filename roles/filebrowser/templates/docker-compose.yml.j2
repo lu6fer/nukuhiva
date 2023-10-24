@@ -6,12 +6,12 @@ services:
     image: filebrowser/filebrowser
     restart: unless-stopped
     environment:
-      - PUID="{{ moorea_uid }}"
-      - PGID="{{ moorea_gid }}"
+      - PUID={{ moorea_uid }}
+      - PGID={{ moorea_gid }}
       - TZ=Europe/Paris
       - UMASK_SET=002
     volumes:
-      - /opt/filebrowser/config/filebrowser.db:/database.db
+      - /opt/filebrowser/config/database.db:/database.db
       - /opt/filebrowser/config/filebrowser.json:/filebrowser.json
       - /srv/downloads:/srv
     networks:

@@ -11,6 +11,9 @@
     path: /opt/sonarr/config
     state: directory
     recurse: true
+    mode: "755"
+    owner: moorea
+    group: moorea
   become: true
   tags: sonarr
 
@@ -22,6 +25,8 @@
     src: docker-compose.yml.j2
     dest: /opt/sonarr/docker-compose.yml
     mode: "644"
+    owner: moorea
+    group: moorea
   become: true
   tags: sonarr
 

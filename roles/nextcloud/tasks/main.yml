@@ -1,36 +1,33 @@
 ---
-# tasks file for radarr
+# tasks file for nextcloud
 - name: Get moorea user info
   ansible.builtin.getent:
     database: passwd
     key: moorea
-  tags: jackett
+  tags: nextcloud
 
 - name: Create directories
   ansible.builtin.file:
-    path: /opt/jackett/config
+    path: /opt/nextcloud/mysql
     state: directory
     recurse: true
     owner: moorea
     group: moorea
   become: true
-  tags: jackett
+  tags: nextcloud
 
 - name: Copy docker-compose
-  vars:
-    moorea_uid: "{{ ansible_facts.getent_passwd.moorea.1 }}"
-    moorea_gid: "{{ ansible_facts.getent_passwd.moorea.2 }}"
   ansible.builtin.template:
     src: docker-compose.yml.j2
-    dest: /opt/jackett/docker-compose.yml
+    dest: /opt/nextcloud/docker-compose.yml
     mode: "644"
     owner: moorea
     group: moorea
   become: true
-  tags: jackett
+  tags: nextcloud
 
-- name: Start jackett
+- name: Start nextcloud
   community.docker.docker_compose:
-    project_src: /opt/jackett/
+    project_src: /opt/nextcloud/
   become: true
-  tags: jackett
+  tags: nextcloud

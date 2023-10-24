@@ -1,35 +1,21 @@
 ---
-# tasks file for filebrowser
+# tasks file for prowlarr
 - name: Get moorea user info
   ansible.builtin.getent:
     database: passwd
     key: moorea
-  tags: filebrowser
+  tags: prowlarr
 
 - name: Create directories
   ansible.builtin.file:
-    path: /opt/filebrowser/config
+    path: /opt/prowlarr/config
     state: directory
     recurse: true
+    mode: "755"
     owner: moorea
     group: moorea
-  with_items:
-    - /opt/filebrowser/config
   become: true
-  tags: filebrowser
-
-- name: Copy configuration
-  ansible.builtin.copy:
-    src: "{{ item }}"
-    dest: "/opt/filebrowser/config/{{ item }}"
-    mode: "644"
-    owner: moorea
-    group: moorea
-  with_items:
-    - database.db
-    - filebrowser.json
-  become: true
-  tags: filebrowser
+  tags: prowlarr
 
 - name: Copy docker-compose
   vars:
@@ -37,15 +23,15 @@
     moorea_gid: "{{ ansible_facts.getent_passwd.moorea.2 }}"
   ansible.builtin.template:
     src: docker-compose.yml.j2
-    dest: /opt/filebrowser/docker-compose.yml
+    dest: /opt/prowlarr/docker-compose.yml
     mode: "644"
     owner: moorea
     group: moorea
   become: true
-  tags: filebrowser
+  tags: prowlarr
 
-- name: Start filebrowser
+- name: Start prowlarr
   community.docker.docker_compose:
-    project_src: /opt/filebrowser/
+    project_src: /opt/prowlarr/
   become: true
-  tags: filebrowser
+  tags: prowlarr

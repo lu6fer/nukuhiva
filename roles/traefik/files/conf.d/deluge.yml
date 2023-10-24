@@ -32,9 +32,7 @@ http:
     deluge:
       chain:
         middlewares:
-          - "addSlash"
           - "redirect"
-          - "auth"
   #   addRpc:
   #     addPrefix:
   #       prefix: "/RPC2"

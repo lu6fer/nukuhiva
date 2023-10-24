@@ -10,12 +10,12 @@
     - tidescraper
     - sonarr
     - radarr
-    - jackett
+    - prowlarr
     - flaresolverr
     - filebrowser
     - deluge
     - bazarr
     - watchtower
+    - nextcloud
     - traefik
   tags: nukuhiav
-   

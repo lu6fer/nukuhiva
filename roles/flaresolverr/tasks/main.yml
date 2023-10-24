@@ -6,6 +6,8 @@
     path: /opt/flaresolverr
     state: directory
     recurse: true
+    owner: moorea
+    group: moorea
   become: true
   tags: flaresolverr
 
@@ -14,6 +16,8 @@
     src: docker-compose.yml
     dest: /opt/flaresolverr/docker-compose.yml
     mode: "644"
+    owner: moorea
+    group: moorea
   become: true
   tags: flaresolverr
 

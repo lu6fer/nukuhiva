@@ -5,6 +5,8 @@
     path: /opt/vaultwarden
     state: directory
     mode: "755"
+    owner: moorea
+    group: moorea
   become: true
   tags: vaultwarden
 
@@ -13,6 +15,8 @@
     src: docker-compose.yml
     dest: /opt/vaultwarden
     mode: "644"
+    owner: moorea
+    group: moorea
   become: true
   tags: vaultwarden
 

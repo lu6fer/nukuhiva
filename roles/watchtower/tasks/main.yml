@@ -5,6 +5,9 @@
     path: "/opt/watchtower"
     recurse: true
     state: directory
+    mode: "755"
+    owner: moorea
+    group: moorea
   become: true
   tags: watchtower
 
@@ -13,6 +16,8 @@
     src: "docker-compose.yml"
     dest: "/opt/watchtower/docker-compose.yml"
     mode: "644"
+    owner: moorea
+    group: moorea
   become: true
   tags: docker
 

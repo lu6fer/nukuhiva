@@ -5,6 +5,8 @@
     path: "/opt/traefik/{{ item }}"
     state: directory
     mode: "755"
+    owner: moorea
+    group: moorea
   with_items:
     - logs
     - conf.d
@@ -16,6 +18,8 @@
     src: ./conf.d/
     dest: /opt/traefik/conf.d
     mode: "755"
+    owner: moorea
+    group: moorea
   become: true
   tags: traefik
 
@@ -24,6 +28,8 @@
     src: traefik.yml
     dest: /opt/traefik
     mode: "644"
+    owner: moorea
+    group: moorea
   become: true
   tags: traefik
 
@@ -32,6 +38,8 @@
     src: docker-compose.yml
     dest: /opt/traefik
     mode: "644"
+    owner: moorea
+    group: moorea
   become: true
   tags: traefik
 

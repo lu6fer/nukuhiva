@@ -1,0 +1,16 @@
+http:
+  routers:
+    bazarr-http:
+      rule: "Host(`bazarr.lu6fer.fr`)"
+      service: "bazarr@docker"
+      entryPoints:
+        - "http"
+      middlewares:
+        - "redirect"
+    bazarr-https:
+      rule: "Host(`bazarr.lu6fer.fr`)"
+      service: "bazarr@docker"
+      entryPoints:
+        - "https"
+      tls:
+        certResolver: ssl

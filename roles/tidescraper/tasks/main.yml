@@ -5,12 +5,20 @@
     path: /opt/tideScraper
     state: directory
     mode: "755"
+    owner: moorea
+    group: moorea
+  become: true
+  tags: tidescraper
+
+- name: Safe directory
+  ansible.builtin.command:
+    cmd: git config --global --add safe.directory /opt/tideScraper
   become: true
   tags: tidescraper
 
 - name: Clone repo
   ansible.builtin.git:
-    repo: https://github.com/lu6fer/tideScraper.git #git@github.com:lu6fer/tideScraper.git
+    repo: https://github.com/lu6fer/tideScraper.git # git@github.com:lu6fer/tideScraper.git
     dest: /opt/tideScraper
   become: true
   tags: tidescraper
@@ -20,6 +28,8 @@
     src: docker-compose.yml
     dest: /opt/tideScraper/docker-compose.yml
     mode: "644"
+    owner: moorea
+    group: moorea
   become: true
   tags: tidescraper
 

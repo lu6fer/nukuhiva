@@ -1,0 +1,6 @@
+[Unit]
+  Description=Moorea {{ item }} automount
+[Automount]
+  Where=/srv/moorea/{{ item }}
+[Install]
+  WantedBy=multi-user.target
